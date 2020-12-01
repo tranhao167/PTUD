@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLLaoDong" Class="QLLaoDongDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LAPTOP-K2U1RPRD\SQLEXPRESS;Initial Catalog=QLLaoDong;User ID=sa" SettingsObjectName="DAL.Properties.Settings" SettingsPropertyName="QLLaoDongConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DanhSachChamCong" Member="DanhSachChamCongs">
+    <Type Name="DanhSachChamCong">
+      <Column Name="idChamCong" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idNhanVien" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idCongTrinh" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ngayChamcong" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="trangThaiChamCong" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="NhanVien_DanhSachChamCong" Member="NhanVien" ThisKey="idNhanVien" OtherKey="idNhanVien" Type="NhanVien" IsForeignKey="true" />
+      <Association Name="CongTrinh_DanhSachChamCong" Member="CongTrinh" ThisKey="idCongTrinh" OtherKey="idCongTrinh" Type="CongTrinh" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CongViec" Member="CongViecs">
+    <Type Name="CongViec">
+      <Column Name="idCongViec" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenCongViec" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="isDelete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="CongViec_DanhSachCongViecCongTrinh" Member="DanhSachCongViecCongTrinhs" ThisKey="idCongViec" OtherKey="idCongViec" Type="DanhSachCongViecCongTrinh" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DanhSachCongViecCongTrinh" Member="DanhSachCongViecCongTrinhs">
+    <Type Name="DanhSachCongViecCongTrinh">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idCongTrinh" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idCongViec" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="DanhSachCongViecCongTrinh_DanhSachPhanCong" Member="DanhSachPhanCongs" ThisKey="id" OtherKey="idDSCongViecCongTrinh" Type="DanhSachPhanCong" />
+      <Association Name="CongViec_DanhSachCongViecCongTrinh" Member="CongViec" ThisKey="idCongViec" OtherKey="idCongViec" Type="CongViec" IsForeignKey="true" />
+      <Association Name="CongTrinh_DanhSachCongViecCongTrinh" Member="CongTrinh" ThisKey="idCongTrinh" OtherKey="idCongTrinh" Type="CongTrinh" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DanhSachPhanCong" Member="DanhSachPhanCongs">
+    <Type Name="DanhSachPhanCong">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="idNhanVien" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idDSCongViecCongTrinh" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="DanhSachCongViecCongTrinh_DanhSachPhanCong" Member="DanhSachCongViecCongTrinh" ThisKey="idDSCongViecCongTrinh" OtherKey="id" Type="DanhSachCongViecCongTrinh" IsForeignKey="true" />
+      <Association Name="NhanVien_DanhSachPhanCong" Member="NhanVien" ThisKey="idNhanVien" OtherKey="idNhanVien" Type="NhanVien" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TaiKhoan" Member="TaiKhoans">
+    <Type Name="TaiKhoan">
+      <Column Name="idTaiKhoan" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="matKhau" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PhongBan" Member="PhongBans">
+    <Type Name="PhongBan">
+      <Column Name="idPhongBan" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenPhongBan" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="PhongBan_NhanVien" Member="NhanViens" ThisKey="idPhongBan" OtherKey="idPhongBan" Type="NhanVien" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NhanVien" Member="NhanViens">
+    <Type Name="NhanVien">
+      <Column Name="idNhanVien" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenNhanVien" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sdt" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="chucVu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="idPhongBan" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="isDelete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="NhanVien_DanhSachChamCong" Member="DanhSachChamCongs" ThisKey="idNhanVien" OtherKey="idNhanVien" Type="DanhSachChamCong" />
+      <Association Name="NhanVien_DanhSachPhanCong" Member="DanhSachPhanCongs" ThisKey="idNhanVien" OtherKey="idNhanVien" Type="DanhSachPhanCong" />
+      <Association Name="PhongBan_NhanVien" Member="PhongBan" ThisKey="idPhongBan" OtherKey="idPhongBan" Type="PhongBan" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CongTrinh" Member="CongTrinhs">
+    <Type Name="CongTrinh">
+      <Column Name="idCongTrinh" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tenCongTrinh" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="diaChi" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ngayBatDau" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ngayKetThucDuKien" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ngayHoanThanh" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="trangThai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="isDelete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="CongTrinh_DanhSachChamCong" Member="DanhSachChamCongs" ThisKey="idCongTrinh" OtherKey="idCongTrinh" Type="DanhSachChamCong" />
+      <Association Name="CongTrinh_DanhSachCongViecCongTrinh" Member="DanhSachCongViecCongTrinhs" ThisKey="idCongTrinh" OtherKey="idCongTrinh" Type="DanhSachCongViecCongTrinh" />
+    </Type>
+  </Table>
+</Database>
